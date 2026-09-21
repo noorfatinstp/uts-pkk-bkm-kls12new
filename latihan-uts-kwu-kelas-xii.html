@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Latihan UTS Kewirausahaan Kelas XII — SMK Bina Karya Mandiri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF2F6;--surface:#FFFFFF;--ink:#12233A;--muted:#55657A;--line:#D3DCE6;
+  --primary:#173A66;--primary-ink:#FFFFFF;--sun:#FFC21A;--sun-ink:#1B1400;
+  --ok:#0F7A55;--ok-bg:#E3F4EC;--bad:#B3261E;--bad-bg:#FBE7E5;--sel-bg:#E5EEFA;--focus:#1F6FEB;
+  --head:"Bricolage Grotesque","Trebuchet MS","Segoe UI",sans-serif;
+  --body:"Public Sans","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0C1521;--surface:#142235;--ink:#E7EEF6;--muted:#9BADC1;--line:#28394F;
+    --primary:#8FBBF5;--primary-ink:#0C1521;--sel-bg:#1E3554;
+    --ok:#4CC79A;--ok-bg:#12362B;--bad:#FF8F86;--bad-bg:#3E1D1B;--focus:#8FBBF5;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0C1521;--surface:#142235;--ink:#E7EEF6;--muted:#9BADC1;--line:#28394F;
+  --primary:#8FBBF5;--primary-ink:#0C1521;--sel-bg:#1E3554;
+  --ok:#4CC79A;--ok-bg:#12362B;--bad:#FF8F86;--bad-bg:#3E1D1B;--focus:#8FBBF5;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px 48px}
+h1,h2,h3{font-family:var(--head);line-height:1.15;margin:0}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 20px;border-radius:10px;border:2px solid var(--primary);background:var(--primary);color:var(--primary-ink);font-weight:600;cursor:pointer}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn-sun{background:var(--sun);border-color:var(--sun);color:var(--sun-ink)}
+.btn-block{width:100%}
+
+/* ---------- Intro ---------- */
+.school{font-weight:600;color:var(--muted);margin:8px 0 10px}
+.title{font-size:clamp(2rem,7vw,3.1rem);font-weight:800;letter-spacing:-.02em}
+.sub{color:var(--muted);margin:10px 0 24px;max-width:52ch}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}
+.field{display:block;margin-bottom:16px}
+.field>span{display:block;font-weight:600;margin-bottom:6px}
+.inp{width:100%;min-height:48px;padding:0 14px;border-radius:10px;border:2px solid var(--line);background:var(--bg)}
+.inp:focus{border-color:var(--focus)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.err{color:var(--bad);font-weight:600;min-height:1.4em;margin:0 0 10px}
+.rules{margin:24px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+.rules li{padding-left:16px;border-left:4px solid var(--sun);color:var(--ink)}
+
+/* ---------- Top bar ---------- */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar-in{max-width:760px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px}
+.who{min-width:0;flex:1;line-height:1.25}
+.who b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.who span{color:var(--muted);font-size:.875rem}
+.clock{font-family:var(--head);font-weight:800;font-size:1.7rem;font-variant-numeric:tabular-nums;background:var(--primary);color:var(--primary-ink);padding:2px 12px;border-radius:10px;min-width:5.2ch;text-align:center}
+.clock.warn{background:var(--sun);color:var(--sun-ink)}
+.clock.crit{background:var(--bad);color:#fff}
+.tbar{height:5px;background:var(--line)}
+.tbar i{display:block;height:100%;width:100%;background:var(--primary);transition:width .4s linear}
+.tbar.warn i{background:var(--sun)}
+.tbar.crit i{background:var(--bad)}
+.bar .btn{min-height:40px;padding:0 14px;font-size:.9rem}
+
+/* ---------- Quiz ---------- */
+.qmeta{display:flex;justify-content:space-between;align-items:baseline;gap:8px;color:var(--muted);font-weight:600;margin-bottom:10px}
+.qcard{user-select:none;-webkit-user-select:none}
+.qtext{font-size:1.1rem;line-height:1.6;margin:0 0 18px;font-weight:500}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;min-height:52px;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);cursor:pointer}
+.opt:hover{border-color:var(--primary)}
+.opt.on{border-color:var(--primary);background:var(--sel-bg)}
+.lt{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--bg);border:2px solid var(--line);font-weight:700;font-size:.9rem}
+.opt.on .lt{background:var(--primary);border-color:var(--primary);color:var(--primary-ink)}
+.opt>span:last-child{padding-top:3px}
+.nav{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.count{color:var(--muted);font-weight:600;margin:0 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(38px,1fr));gap:6px}
+.gn{aspect-ratio:1;border-radius:8px;border:2px solid var(--line);background:var(--surface);font-weight:600;font-size:.85rem;cursor:pointer;padding:0}
+.gn.done{background:var(--primary);border-color:var(--primary);color:var(--primary-ink)}
+.gn.cur{outline:3px solid var(--sun);outline-offset:1px}
+.donenote{margin:16px 0 0;padding:14px 16px;border-radius:12px;background:var(--ok-bg);color:var(--ok);font-weight:600;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.donenote .btn{background:var(--ok);border-color:var(--ok);color:#fff}
+.submit-row{margin-top:20px}
+
+/* ---------- Result ---------- */
+.score{display:flex;align-items:flex-end;gap:10px;margin:8px 0 4px}
+.score b{font-family:var(--head);font-size:clamp(4rem,20vw,6.5rem);line-height:.9;font-weight:800;letter-spacing:-.03em}
+.score span{font-size:1.4rem;color:var(--muted);font-weight:600;padding-bottom:6px}
+.lock{color:var(--muted);margin:6px 0 18px}
+.notice{padding:12px 14px;border-radius:10px;background:var(--sel-bg);margin:0 0 16px;font-weight:500}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:0 0 18px}
+.stats div{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg)}
+.stats dt{color:var(--muted);font-size:.85rem}
+.stats dd{margin:0;font-family:var(--head);font-weight:800;font-size:1.5rem}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.sec{margin:28px 0 12px;font-size:1.35rem}
+.mat{width:100%;border-collapse:collapse;font-size:.95rem}
+.mat th,.mat td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:middle}
+.mat td.n{white-space:nowrap;font-variant-numeric:tabular-nums;width:1%}
+.meter{height:8px;border-radius:4px;background:var(--line);overflow:hidden;min-width:70px}
+.meter i{display:block;height:100%;background:var(--ok)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+.chip{min-height:38px;padding:0 14px;border-radius:999px;border:2px solid var(--line);background:var(--surface);cursor:pointer;font-weight:600}
+.chip[aria-pressed="true"]{background:var(--primary);border-color:var(--primary);color:var(--primary-ink)}
+.rv{background:var(--surface);border:1px solid var(--line);border-left-width:6px;border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.rv.benar{border-left-color:var(--ok)}
+.rv.salah{border-left-color:var(--bad)}
+.rv.kosong{border-left-color:var(--muted)}
+.rv-h{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px;font-weight:700}
+.rv-st{padding:1px 10px;border-radius:999px;font-size:.85rem}
+.benar .rv-st{background:var(--ok-bg);color:var(--ok)}
+.salah .rv-st{background:var(--bad-bg);color:var(--bad)}
+.kosong .rv-st{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
+.rv-cat{font-weight:500;color:var(--muted);font-size:.85rem}
+.rv-q{margin:0 0 10px}
+.rv-o{list-style:none;margin:0 0 10px;padding:0;display:grid;gap:6px}
+.rv-o li{display:flex;gap:10px;padding:6px 10px;border-radius:8px;border:1px solid var(--line)}
+.rv-o li.ok{background:var(--ok-bg);border-color:var(--ok)}
+.rv-o li.no{background:var(--bad-bg);border-color:var(--bad)}
+.rv-o b{flex:none}
+.tag{margin-left:auto;font-size:.8rem;font-weight:700;white-space:nowrap}
+.rv-e{margin:0;padding:10px 12px;border-radius:8px;background:var(--bg)}
+
+/* ---------- Modal & toast ---------- */
+.modal{position:fixed;inset:0;z-index:50;background:rgba(8,16,28,.62);display:grid;place-items:center;padding:20px}
+.mbox{background:var(--surface);border-radius:16px;max-width:440px;width:100%;padding:24px;border:1px solid var(--line);max-height:100%;overflow:auto}
+.mbox h2{font-size:1.4rem;margin-bottom:10px}
+.mbox p{margin:0 0 12px}
+.mwho{padding:10px 12px;border-radius:10px;background:var(--bg);font-weight:600}
+.mact{display:grid;gap:10px;margin-top:16px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:10px;z-index:60;font-weight:600;max-width:90vw}
+@media (max-width:420px){
+  .bar-in{gap:8px;padding:8px 12px}
+  .clock{font-size:1.4rem;padding:2px 10px}
+  .row2{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header class="bar" id="bar" hidden>
+  <div class="bar-in">
+    <div class="who"><b id="b-nama"></b><span id="b-kelas"></span></div>
+    <div class="clock" id="clock" role="timer" aria-label="Sisa waktu">50:00</div>
+    <button class="btn btn-ghost" id="b-kirim" type="button">Kirim Nilai</button>
+  </div>
+  <div class="tbar" id="tbar"><i id="tfill"></i></div>
+</header>
+
+<main>
+  <!-- ================= INTRO ================= -->
+  <section class="wrap" id="s-intro">
+    <p class="school">SMK Bina Karya Mandiri · Kewirausahaan (KIK) · Kelas XII</p>
+    <h1 class="title">Latihan UTS Kewirausahaan</h1>
+    <p class="sub">Persiapan Ujian Tengah Semester Ganjil 2026/2027. Soal berupa studi kasus tentang kompetitor, peluang usaha, strategi, dan hitungan keuangan sederhana.</p>
+
+    <div class="card">
+      <form id="f-mulai" novalidate>
+        <label class="field"><span>Nama lengkap</span>
+          <input class="inp" id="i-nama" type="text" autocomplete="name" maxlength="60" placeholder="Tulis namamu">
+        </label>
+        <div class="row2">
+          <label class="field"><span>Jurusan</span>
+            <select class="inp" id="i-jur"><option value="">Pilih jurusan</option></select>
+          </label>
+          <label class="field"><span>Kelas</span>
+            <select class="inp" id="i-no" disabled><option value="">Pilih kelas</option></select>
+          </label>
+        </div>
+        <p class="err" id="i-err" role="alert"></p>
+        <button class="btn btn-sun btn-block" type="submit">Mulai Mengerjakan</button>
+      </form>
+    </div>
+
+    <ul class="rules">
+      <li>50 soal pilihan ganda, setiap soal bernilai 2. Jawaban benar semua berarti nilai 100.</li>
+      <li>Waktu 50 menit dihitung sejak tombol Mulai ditekan, lalu ujian tertutup otomatis.</li>
+      <li>Soal dan urutan pilihan jawaban berbeda untuk setiap siswa.</li>
+      <li>Jangan pindah tab atau membuka aplikasi lain. Kalau itu terjadi, soal kembali ke nomor 1, semua jawaban terhapus, dan waktu tetap berjalan.</li>
+      <li>Selesai lebih cepat? Tekan Kirim Nilai. Setelah nilai keluar, jawaban tidak bisa diubah.</li>
+    </ul>
+  </section>
+
+  <!-- ================= QUIZ ================= -->
+  <section class="wrap" id="s-quiz" hidden>
+    <div class="card qcard">
+      <div class="qmeta"><span id="q-no">Soal 1 dari 50</span><span id="q-cnt">Terjawab 0/50</span></div>
+      <p class="qtext" id="q-text"></p>
+      <div class="opts" id="q-opts" role="group" aria-label="Pilihan jawaban"></div>
+    </div>
+
+    <div class="nav">
+      <button class="btn btn-ghost" id="prev" type="button">Sebelumnya</button>
+      <button class="btn" id="next" type="button">Berikutnya</button>
+    </div>
+
+    <div class="donenote" id="donenote" hidden>
+      <span>Semua soal sudah terjawab. Periksa lagi bila perlu, lalu kirim nilai.</span>
+      <button class="btn" id="donebtn" type="button">Kirim Nilai</button>
+    </div>
+
+    <h2 class="sec" style="font-size:1.05rem;margin-top:22px">Daftar soal</h2>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <!-- ================= RESULT ================= -->
+  <section class="wrap" id="s-result" hidden>
+    <p class="school" id="r-who"></p>
+    <h1 class="title" style="font-size:clamp(1.6rem,5vw,2.2rem)">Hasil Latihan UTS</h1>
+    <div class="score"><b id="r-skor">0</b><span>/ 100</span></div>
+    <p class="lock">Nilai sudah terkunci. Jawaban tidak bisa diperbaiki.</p>
+    <p class="notice" id="r-notice" hidden></p>
+
+    <dl class="stats" id="r-stats"></dl>
+
+    <div class="actions">
+      <button class="btn" id="r-unduh" type="button" hidden>Unduh Hasil</button>
+      <button class="btn btn-ghost" id="r-ulang" type="button">Latihan Lagi</button>
+    </div>
+
+    <h2 class="sec">Ringkasan per materi</h2>
+    <div class="card" style="padding:8px 14px"><table class="mat" id="r-mat"></table></div>
+
+    <h2 class="sec">Pembahasan</h2>
+    <div class="chips" id="r-chips"></div>
+    <div id="r-list"></div>
+  </section>
+</main>
+
+<!-- Modal: keluar halaman -->
+<div class="modal" id="m-leave" hidden>
+  <div class="mbox" role="alertdialog" aria-modal="true" aria-labelledby="ml-t">
+    <h2 id="ml-t">Kamu meninggalkan halaman ujian</h2>
+    <p class="mwho" id="ml-who"></p>
+    <p>Soal dikembalikan ke nomor 1 dan semua jawabanmu sudah dihapus. Kerjakan ulang dari awal. Waktu tidak diulang dan tetap berjalan.</p>
+    <p id="ml-info" style="color:var(--muted);font-weight:600"></p>
+    <div class="mact"><button class="btn btn-sun" id="ml-ok" type="button">Mulai lagi dari nomor 1</button></div>
+  </div>
+</div>
+
+<!-- Modal: konfirmasi kirim -->
+<div class="modal" id="m-kirim" hidden>
+  <div class="mbox" role="alertdialog" aria-modal="true" aria-labelledby="mk-t">
+    <h2 id="mk-t">Kirim nilai sekarang?</h2>
+    <p id="mk-info"></p>
+    <p style="color:var(--muted)">Setelah dikirim, jawaban tidak bisa diubah.</p>
+    <div class="mact">
+      <button class="btn btn-sun" id="mk-ya" type="button">Ya, kirim nilai</button>
+      <button class="btn btn-ghost" id="mk-batal" type="button">Kembali mengerjakan</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(function(){
+'use strict';
+
+/* =================== KONFIGURASI =================== */
+var DURASI = 50*60*1000, JUMLAH = 50, NILAI = 2, KEY = 'kwu12_uts_latihan_v1';
+var JURUSAN = {DKV:4, TKJ:13, TKR:11, TSM:13, TITL:4, TAV:1, TPM:3, TAB:9};
+var QUOTA = {K:12, S:11, P:8, F:8, G:5, E:3, R:3};
+var CATNAME = {
+  K:'Analisis Kompetitor & Benchmarking',
+  S:'Strategi Bersaing & Pengembangan Usaha',
+  P:'Peluang Usaha & Uji Pasar',
+  F:'Keuangan & Perhitungan Usaha',
+  G:'Growth Mindset & Kreativitas',
+  E:'Etika & Risiko Usaha',
+  R:'Proposal & Proses Produksi'
+};
+
+/* =================== UTIL =================== */
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function shuffle(a,r){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(r()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function rp(n){return 'Rp'+String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.');}
+function pilih(r,a){return a[Math.floor(r()*a.length)];}
+function rint(r,a,b,s){return a+Math.floor(r()*(Math.floor((b-a)/s)+1))*s;}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function $(id){return document.getElementById(id);}
+function mmss(ms){ms=Math.max(0,ms);var s=Math.ceil(ms/1000),m=Math.floor(s/60);s=s%60;return (m<10?'0':'')+m+':'+(s<10?'0':'')+s;}
+
+function opsiAngka(r,benar,cands){
+  var set=[];
+  cands.forEach(function(c){c=Math.round(c);if(c>0&&c!==benar&&set.indexOf(c)<0)set.push(c);});
+  var u=Math.pow(10,Math.max(3,String(benar).length-2)),g=0;
+  while(set.length<4&&g++<60){var c=benar+(Math.floor(r()*9)-4)*u;if(c>0&&c!==benar&&set.indexOf(c)<0)set.push(c);}
+  set=shuffle(set,r).slice(0,4);
+  return [rp(benar)].concat(set.map(rp));
+}
+
+/* =================== GENERATOR SOAL HITUNGAN (angka acak tiap siswa) =================== */
+function gLaba(r){
+  var u=pilih(r,['toko roti','usaha katering','kedai kopi','toko kue kering','usaha frozen food']);
+  var A=rint(r,40,95,5)*1e6, B=Math.round(A*rint(r,50,60,1)/100/5e5)*5e5, C=rint(r,5,9,1)*1e6;
+  var lk=A-B, lb=A-B-C;
+  return {lvl:'C3',
+    q:'Sebuah '+u+' mencatat total penjualan '+rp(A)+', harga pokok penjualan (HPP) '+rp(B)+', dan biaya operasional '+rp(C)+'. Berapa laba bersih sebelum pajak?',
+    o:opsiAngka(r,lb,[lk,A-C,lk+C,B+C]),
+    e:'Laba kotor = '+rp(A)+' − '+rp(B)+' = '+rp(lk)+'. Laba sebelum pajak = '+rp(lk)+' − '+rp(C)+' = '+rp(lb)+'.'};
+}
+function gLain(r){
+  var LU=rint(r,12,40,1)*1e6, P=rint(r,1,4,1)*5e5, Q=rint(r,1,3,1)*5e5;
+  if(P===Q)Q+=5e5;
+  var u=pilih(r,['toko','bengkel','kedai','usaha laundry']);
+  var benar=LU+P-Q;
+  return {lvl:'C3',
+    q:'Laba usaha sebuah '+u+' sebesar '+rp(LU)+'. Pada periode yang sama tercatat pendapatan lain-lain (bunga bank) '+rp(P)+' dan beban lain-lain (denda) '+rp(Q)+'. Berapa laba sebelum pajak?',
+    o:opsiAngka(r,benar,[LU-P+Q,LU+P+Q,LU-P-Q,LU+P,LU-Q]),
+    e:'Laba sebelum pajak = laba usaha + pendapatan lain-lain − beban lain-lain = '+rp(LU)+' + '+rp(P)+' − '+rp(Q)+' = '+rp(benar)+'.'};
+}
+function gModal(r){
+  var M=rint(r,50,150,5)*1e6, L=rint(r,15,40,1)*1e6, P=rint(r,4,12,1)*1e6, T=rint(r,5,20,1)*1e6;
+  var benar=M+L-P+T;
+  return {lvl:'C3',
+    q:'Modal awal sebuah usaha '+rp(M)+'. Selama setahun usaha memperoleh laba bersih '+rp(L)+', pemilik mengambil prive '+rp(P)+', dan menambah investasi '+rp(T)+'. Berapa modal akhirnya?',
+    o:opsiAngka(r,benar,[M+L+P+T,M+L-P,M-L-P+T,M+L+P,M+L+T]),
+    e:'Modal akhir = modal awal + laba + tambahan investasi − prive = '+rp(M)+' + '+rp(L)+' + '+rp(T)+' − '+rp(P)+' = '+rp(benar)+'.'};
+}
+function gNeraca(r){
+  var K=rint(r,20,60,1)*1e6, a=rint(r,8,25,1)*1e6, p=rint(r,2,6,1)*1e6, b=rint(r,2,8,1)*1e6, c=rint(r,3,9,1)*1e6;
+  var benar=K+a+b;
+  return {lvl:'C4',
+    q:'Kewajiban sebuah bengkel di awal transaksi akhir tahun adalah '+rp(K)+'. Lalu terjadi: (1) membeli peralatan secara kredit '+rp(a)+'; (2) pemilik mengambil kas '+rp(p)+' untuk keperluan pribadi; (3) beban gaji '+rp(b)+' belum dibayar; (4) membayar sewa '+rp(c)+' untuk tahun depan. Berapa total kewajiban sekarang?',
+    o:opsiAngka(r,benar,[K+a+b+c,K+a+b+p,K+a,K+b,K+a+b-c]),
+    e:'Yang menambah kewajiban hanya pembelian kredit ('+rp(a)+') dan gaji terutang ('+rp(b)+'). Prive mengurangi modal, sewa dibayar di muka menambah aset. Total = '+rp(benar)+'.'};
+}
+function gBiaya(r){
+  var N=rint(r,20,100,10), x=rint(r,3000,9000,500), y=rint(r,1000,3000,500);
+  var benar=N*(x+y);
+  return {lvl:'C3',
+    q:'Satu gantungan kunci akrilik memakai bahan akrilik '+rp(x)+' dan ring kunci '+rp(y)+'. Untuk satu kali produksi sebanyak '+N+' buah, berapa total biaya bahan bakunya?',
+    o:opsiAngka(r,benar,[N*x,N*y,N*x+y,x+N*y]),
+    e:'Biaya bahan per unit = '+rp(x)+' + '+rp(y)+' = '+rp(x+y)+'. Total = '+N+' × '+rp(x+y)+' = '+rp(benar)+'.'};
+}
+function gHarga(r){
+  var h=rint(r,8000,30000,2000), m=pilih(r,[20,25,30,40]);
+  var benar=h*(100+m)/100;
+  return {lvl:'C3',
+    q:'HPP satu produk adalah '+rp(h)+'. Pemilik ingin memperoleh laba '+m+'% dari HPP. Berapa harga jual per produk?',
+    o:opsiAngka(r,benar,[h*(100-m)/100,h+m,Math.round(h/((100-m)/100)),h*(100+2*m)/100]),
+    e:'Harga jual = HPP + laba = '+rp(h)+' + '+m+'% × '+rp(h)+' = '+rp(benar)+'.'};
+}
+function gDiskon(r){
+  var p=rint(r,20,40,5)*1000, d=pilih(r,[10,20,25,30]), m=rint(r,2,4,1)*1000;
+  var net=p*(100-d)/100, h=net-m;
+  return {lvl:'C4',
+    q:'Sebuah usaha menjual produk seharga '+rp(p)+' dengan HPP '+rp(h)+' per unit. Untuk promo, diberikan diskon '+d+'%. Berapa laba per unit setelah diskon?',
+    o:opsiAngka(r,m,[p-h,p*d/100,net,p-h+p*d/100]),
+    e:'Harga setelah diskon = '+rp(net)+'. Laba = '+rp(net)+' − '+rp(h)+' = '+rp(m)+'. Menghitung laba dari harga sebelum diskon ('+rp(p-h)+') menyesatkan.'};
+}
+
+/* =================== BANK SOAL =================== */
+/* format: [level, soal, KUNCI, salah1, salah2, salah3, salah4, pembahasan] */
+var BANK = {
+K:[
+["C4","Warung ayam crispy kehilangan sebagian pelanggan karena pesaing menjual Rp3.000 lebih murah. Pelanggan mengaku rasa ayam warung ini lebih enak. Strategi paling tepat?","Jaga rasa, tambah paket hemat","Turunkan kualitas agar harga sama","Tiru seluruh menu pesaing","Ganti bumbu dengan produk instan","Tunggu pelanggan kembali sendiri","Rasa adalah keunggulan yang dipertahankan. Paket hemat menambah nilai tanpa mengorbankan kualitas."],
+["C4","Kedai kopi bermodal terbatas membandingkan tiga pesaing. Survei pelanggan sekitar sekolah: 60% keluhan soal antrean lama, 25% soal harga, 15% soal kemasan. Aspek yang paling realistis diprioritaskan?","Kecepatan pelayanan","Kemasan mewah","Harga paling murah","Dekorasi ruangan","Ukuran gelas","Keluhan terbanyak ada pada antrean, dan memperbaiki alur layanan berbiaya lebih kecil daripada mengubah kemasan atau harga."],
+["C4","Pesaing keripik pisang laku lebih banyak: kemasannya menarik, rasanya bervariasi, dan aktif promosi di media sosial. Rasa keripikmu setara. Kesimpulan yang tepat?","Pesaing unggul di tampilan dan pemasaran","Pesaing unggul karena bahan lebih baik","Produk kita pasti kalah kualitas","Pasar keripik sudah jenuh","Promosi tidak memengaruhi penjualan","Rasa setara, jadi selisih penjualan bersumber dari kemasan, varian, dan promosi."],
+["C3","Sebuah restoran sukses memakai sistem pesan lewat kode QR. Usahamu hanya punya 5 meja dan belum punya kasir digital. Tindakan yang tepat?","Adaptasi versi sederhana lewat WhatsApp","Tiru sistemnya persis sama","Beli semua perangkat sekarang","Abaikan karena beda skala","Tunggu pesaing mencobanya dulu","Hasil benchmarking dianalisis lalu disesuaikan dengan kebutuhan dan kemampuan usaha."],
+["C5","Target pasarmu kelas menengah. Pesaing A: harga murah, kualitas biasa. Pesaing B: harga tinggi, kualitas sangat baik. Keputusan terbaik untuk memperkuat posisi produkmu?","Kualitas baik, harga di antara keduanya","Harga lebih murah dari A","Harga lebih tinggi dari B","Kualitas biasa, harga tinggi","Tiru produk A seutuhnya","Posisi tengah (nilai baik, harga terjangkau) sesuai daya beli kelas menengah dan mengisi celah di antara kedua pesaing."],
+["C3","Kafe besar memakai aplikasi poin dan cashback. Kedai kecilmu bermodal minim. Program loyalitas yang paling tepat diadaptasi?","Kartu stempel beli 8 gratis 1","Bangun aplikasi poin sendiri","Cashback 50% semua transaksi","Bagikan voucher tanpa syarat","Tidak perlu program apa pun","Kartu stempel murah dan mudah dijalankan, tetapi tetap mendorong pelanggan kembali."],
+["C5","Seorang pengusaha membeli 10.000 pengikut palsu agar tampak lebih populer dari pesaing. Ditinjau dari persaingan sehat, keputusan ini...","Tidak tepat, menipu calon pelanggan","Tepat, karena banyak yang melakukan","Tepat, selama harga tetap murah","Tepat, karena dibolehkan platform","Tidak masalah asalkan omzet naik","Membangun citra semu adalah praktik tidak jujur dan bertentangan dengan prinsip persaingan sehat."],
+["C5","Usaha dessert box kalah bersaing karena pesaing punya banyak varian rasa, sedangkan modal dan tenaga produksi terbatas. Strategi inovasi terbaik?","Tambah 2 rasa musiman bertahap","Luncurkan 15 rasa sekaligus","Ganti seluruh menu lama","Beli mesin produksi besar","Potong harga hingga setengah","Inovasi bertahap tetap sesuai modal dan kapasitas, sekaligus menguji rasa mana yang diminati."],
+["C5","Pesaing A unggul di harga, B di kemasan, C di pelayanan. Strategi mana yang paling menunjukkan kemampuan mencipta?","Meramu ketiganya jadi strategi khas sendiri","Meniru pesaing terkuat saja","Menyalin ketiganya sepenuhnya","Fokus menjelekkan semua pesaing","Memilih harga termurah saja","Mencipta berarti menggabungkan pelajaran dari banyak sumber menjadi sesuatu yang sesuai karakter usaha sendiri."],
+["C3","Kamu akan membandingkan tiga usaha laundry di sekitar sekolah. Data yang paling relevan dikumpulkan?","Harga, lama proses, keluhan pelanggan","Warna cat gedung","Usia pemilik usaha","Nama papan usaha","Jumlah lantai bangunan","Harga, kecepatan, dan keluhan menggambarkan kekuatan dan kelemahan yang bisa dibandingkan."],
+["C3","Bengkel motor SMK memiliki peralatan berstandar industri dan teknisi bersertifikat BNSP. Faktor ini termasuk unsur...","Kekuatan (Strength)","Kelemahan (Weakness)","Peluang (Opportunity)","Ancaman (Threat)","Tujuan usaha","Peralatan dan teknisi berkualitas adalah faktor internal yang menguntungkan."],
+["C3","Harga bahan baku utama sebuah kedai naik 20% akibat kelangkaan pasokan. Faktor ini termasuk unsur...","Ancaman (Threat)","Kekuatan (Strength)","Kelemahan (Weakness)","Peluang (Opportunity)","Strategi pemasaran","Kenaikan harga dari luar usaha yang merugikan tergolong ancaman eksternal."],
+["C4","Sebuah perumahan baru dibuka dekat toko kelontongmu dan ribuan calon pembeli mulai menetap di sana. Faktor ini termasuk unsur...","Peluang (Opportunity)","Kekuatan (Strength)","Kelemahan (Weakness)","Ancaman (Threat)","Modal usaha","Pertumbuhan konsumen baru adalah faktor eksternal yang menguntungkan."],
+["C4","Sebuah pesaing speaker Bluetooth custom berdesain estetik, tetapi suaranya kurang jernih dan harganya mahal. Kesimpulan tentang pesaing tersebut?","Kuat di desain, lemah di suara dan harga","Kuat di harga, lemah di desain","Kuat di suara, lemah di desain","Kuat di semua aspek","Lemah di semua aspek","Desain estetik adalah kekuatannya, sedangkan suara kurang jernih dan harga mahal adalah kelemahannya."],
+["C4","Adit menyalin persis nama, logo, dan menu pesaing agar cepat laris. Penilaian yang tepat?","Keliru, benchmarking itu belajar lalu menyesuaikan","Tepat, meniru cara tercepat laris","Tepat, hemat biaya riset dan desain","Keliru, karena pesaing pasti rugi","Tepat, asalkan beda alamat usaha","Benchmarking bukan menjiplak: pelajari praktik terbaik, lalu sesuaikan dan beri ciri khas sendiri."],
+["C4","Data rating: A 4,8 (harga tinggi), B 4,2 (harga sedang), C 3,9 (harga rendah). Usahamu rating 4,5 dengan harga sedang. Simpulan yang tepat?","Bersaing ketat dengan B, perlu pembeda","Usahamu pasti terbaik di pasar","Usahamu kalah dari C","Wajib menyamai harga A","Analisis tidak perlu dilanjutkan","Harga dan rating usahamu paling dekat dengan B, sehingga butuh pembeda agar unggul."],
+["C3","Langkah pertama menganalisis kompetitor untuk usaha cuci sepatu yang baru dirintis?","Mendata pesaing terdekat dan layanannya","Menurunkan harga sebelum buka","Memasang iklan besar-besaran","Merekrut banyak karyawan","Membeli mesin canggih","Analisis dimulai dengan mengenali siapa pesaingnya dan apa yang mereka tawarkan."],
+["C4","Pesaing rutin siaran langsung TikTok dan omzetnya naik, sedangkan usahamu belum punya konten. Penyebab paling masuk akal?","Jangkauan promosi digital pesaing lebih luas","Produk pesaing pasti lebih enak","Harga pesaing pasti lebih murah","Pelanggan tidak suka belanja daring","Lokasi pesaing pasti lebih ramai","Perbedaan yang terlihat jelas ada pada promosi digital, bukan pada produk atau harga."],
+["C5","Pesaing memotong harga 30% dan kualitasnya ikut turun. Usahamu memakai bahan berkualitas. Tindakan yang bijak?","Tonjolkan kualitas lewat testimoni dan sampel","Ikut memotong harga 30%","Kurangi bahan agar biaya turun","Tutup usaha sementara waktu","Sebarkan isu buruk soal pesaing","Mempertahankan kualitas dan membuktikannya menjaga pelanggan yang menghargai mutu."],
+["C4","Peta persaingan: segmen murah sangat padat, segmen premium masih sepi, dan bahanmu berkualitas tinggi. Arah terbaik?","Masuk segmen premium dengan pembeda jelas","Bertarung di segmen murah","Jual di bawah harga pokok","Pindah ke usaha lain","Turunkan kualitas agar murah","Celah pasar premium cocok dengan keunggulan bahan berkualitas tinggi dan minim persaingan."]
+],
+S:[
+["C5","Usaha makanan unggul di rasa, tetapi kalah di promosi dan kemasan. Modal terbatas sehingga semua tidak bisa diubah sekaligus. Rancangan pengembangan terbaik?","Urutkan prioritas, perbaiki bertahap","Ubah kemasan dan promosi sekaligus","Pinjam modal besar sekarang juga","Tunda sampai pesaing menyusut","Hentikan produksi sementara","Dengan modal terbatas, perubahan diprioritaskan dan dijalankan bertahap sesuai dampak dan biaya."],
+["C4","Kompetitor usaha sewa alat berat sering terlambat mengirim dan alatnya mudah rusak. Strategi bersaing paling tepat untuk usahamu?","Jamin ketepatan kirim, rawat alat","Naikkan tarif sewa sepihak","Sewakan alat yang lebih tua","Kurangi jumlah alat tersedia","Perpanjang waktu pengiriman","Menjawab kelemahan pesaing (terlambat dan rusak) menjadi pembeda yang bernilai bagi penyewa."],
+["C4","Usaha servis mobil panggilan memberi garansi servis ulang gratis. Bukti paling tepat bahwa strategi ini meningkatkan daya saing?","Pelanggan ulang dan pesanan meningkat","Banyak brosur yang dicetak","Teman pemilik memberi pujian","Jumlah peralatan bertambah","Harga suku cadang turun","Keberhasilan strategi diukur dari perilaku pelanggan: pembelian ulang dan kenaikan pesanan."],
+["C5","Penjualan keripik pisang daring turun karena pesaing bertambah. Survei: konsumen ingin varian rasa baru dan kemasan kecil. Tindakan paling tepat?","Buat varian rasa dan kemasan kecil","Naikkan harga semua produk","Hentikan seluruh iklan","Ganti produk jadi keripik singkong","Samakan harga dengan pesaing","Keputusan berbasis data survei: kebutuhan konsumen dijawab langsung lewat varian dan kemasan."],
+["C5","Usaha beromzet tinggi tetapi berlaba kecil karena diskon besar dan perhitungan biaya produksi tidak lengkap. Langkah paling tepat?","Hitung ulang HPP lengkap, batasi diskon","Tambah diskon agar lebih laris","Targetkan omzet lebih tinggi lagi","Abaikan biaya listrik dan tenaga","Kurangi jumlah pelanggan","Harga jual yang sehat berpijak pada HPP lengkap, dan diskon dibatasi agar margin terjaga."],
+["C4","Toko pakaian daring menerima komentar negatif karena ukuran produk tidak konsisten. Strategi mempertahankan pelanggan tanpa biaya berlebihan?","Standarkan pola ukuran, cek sebelum kirim","Nonaktifkan kolom komentar","Beri diskon besar selamanya","Ganti seluruh penjahit","Naikkan harga agar terkesan premium","Akar masalah ada di konsistensi ukuran; standarisasi dan pengecekan murah tetapi efektif."],
+["C5","Usaha makanan sehat bersaing dengan pesaing berharga lebih murah. Strategi membangun keunggulan yang tepat?","Tonjolkan keunikan sesuai kebutuhan pasar","Samakan harga dengan pesaing","Kurangi bahan sehat demi biaya","Tiru kemasan pesaing termurah","Perbanyak menu apa saja","Diferensiasi berdasar kebutuhan target pasar membuat produk dipilih, bukan hanya karena harga."],
+["C4","Produkmu berkualitas dan sesuai kebutuhan, tetapi belum dikenal sebagian besar target pasar. Strategi paling sesuai?","Promosi tertarget di media yang dipakai pasar","Turunkan kualitas agar murah","Menunggu dikenal dengan sendirinya","Naikkan harga secara drastis","Kurangi produksi bulanan","Masalahnya kesadaran merek, sehingga promosi tertarget menjadi solusi."],
+["C5","Untuk menambah untung, usaha roti memilih antara menaikkan harga atau meningkatkan efisiensi produksi. Konsumennya sensitif harga. Keputusan paling tepat?","Tingkatkan efisiensi produksi lebih dahulu","Naikkan harga 30% segera","Perkecil ukuran tanpa pemberitahuan","Ganti dengan bahan termurah","Hentikan semua promo","Efisiensi menurunkan biaya tanpa membebani konsumen yang sensitif terhadap harga."],
+["C4","Kafe dekat kampus ramai pada malam hari, tetapi sepi pada siang hari. Strategi paling tepat?","Buat promo paket siang mahasiswa","Tutup kafe pada siang hari","Naikkan harga menu malam","Pindahkan lokasi segera","Hapus semua menu siang","Promo terarah pada segmen yang sudah ada mengisi jam sepi tanpa biaya besar."],
+["C4","Setelah program bundling diskon, omzet naik 20% tetapi laba menurun. Simpulan paling tepat?","Diskon belum memperhitungkan margin","Strategi sudah sukses total","Omzet naik berarti untung naik","Pelanggan tidak suka diskon","Bundling dihentikan selamanya","Omzet naik tidak otomatis menaikkan laba bila margin per produk tergerus diskon."],
+["C5","Tiga ide perbaikan: A berdampak besar berbiaya kecil, B berdampak besar berbiaya besar, C berdampak kecil berbiaya kecil. Modal terbatas. Urutan prioritas?","A lebih dahulu","B lebih dahulu","C lebih dahulu","Semuanya sekaligus","Tidak satu pun dijalankan","Ide A memberi hasil terbesar dengan biaya terkecil, sehingga paling layak diprioritaskan."],
+["C4","Ulasan pelanggan menyebut pesanan daring sering salah kirim. Perbaikan yang paling efektif?","Buat daftar cek sebelum paket dikirim","Tutup layanan pesan daring","Balas ulasan dengan emoji saja","Tambah anggaran iklan","Naikkan gaji admin","Kesalahan proses diatasi dengan pengendalian (daftar cek) sebelum pengiriman."],
+["C5","Usaha kerajinan bambu ingin menjangkau pasar lebih luas dengan modal kecil. Langkah yang paling tepat?","Titip jual di marketplace dan galeri","Bangun toko besar lebih dulu","Ekspor langsung tanpa uji pasar","Menunggu pesanan datang","Kurangi ragam produk","Kanal berbiaya rendah menjangkau pasar lebih luas tanpa risiko modal besar."],
+["C4","Laundry langgananmu dibuka pesaing dengan harga 10% lebih murah. Respons yang paling bijak?","Tambah antar-jemput gratis terbatas","Turunkan harga 30%","Kurangi kualitas deterjen","Tutup saat akhir pekan","Ganti nama usaha","Nilai tambah layanan mempertahankan pelanggan tanpa merusak margin dan kualitas."]
+],
+P:[
+["C3","Tren hidup sehat memunculkan peluang usaha salad buah dan infused water. Faktor pendorong utamanya?","Meningkatnya kesadaran pola hidup sehat","Harga buah yang selalu murah","Sedikitnya pesaing di kota","Musim hujan berkepanjangan","Promo marketplace bulanan","Perubahan gaya hidup konsumen menciptakan permintaan baru."],
+["C4","Tren AI meningkat, sedangkan banyak UMKM kesulitan mencari tim pemasaran. Peluang usaha baru yang paling tepat?","Jasa pemasaran UMKM berbantuan AI","Toko alat tulis besar","Jasa fotokopi tradisional","Penjualan kaset pita lama","Kursus mesin ketik","Tren teknologi dan masalah UMKM bertemu pada jasa pemasaran berbantuan AI."],
+["C5","Peluang A: ROI 40%, persaingan sangat ketat, celah pasar kecil. B: ROI 25%, persaingan sedang, celah pasar besar. C: ROI 60%, tren cepat memudar. Pilihan terbaik untuk jangka panjang?","B, ROI sedang dan celah besar","A, ROI tinggi meski sengit","C, ROI tertinggi","A dan C bersamaan","Menunggu peluang lain","Untuk jangka panjang, celah pasar besar dan persaingan sedang lebih berkelanjutan daripada ROI sesaat."],
+["C4","Pemilik bengkel ingin menambah layanan perawatan berkala dan modifikasi kendaraan. Fokus utama analisis sumber peluangnya?","Kebutuhan pelanggan dan permintaan layanan","Warna papan nama bengkel","Merek oli favorit pemilik","Jumlah kursi ruang tunggu","Harga bensin bulan lalu","Peluang bersumber dari kebutuhan dan permintaan pasar yang nyata."],
+["C5","Modal terbatas. Survei: target konsumen berbelanja makanan lewat media sosial pada malam hari dan menyukai porsi kecil. Alokasi modal paling rasional?","Kemasan porsi kecil dan iklan malam","Sewa kios besar","Beli oven industri","Cetak spanduk se-kota","Stok bahan tiga bulan","Modal dialokasikan pada hal yang sesuai perilaku konsumen berdasarkan hasil survei."],
+["C5","Di tengah banyak desainer berharga murah, survei menunjukkan UMKM butuh desain khusus promosi digital. Peluang terbaik?","Spesialis paket konten promosi UMKM","Perang harga termurah","Desain umum segala jenis","Cetak undangan massal","Tutup jasa desain","Ceruk pasar yang spesifik menghindarkan usaha dari perang harga."],
+["C5","Kelompok siswa bermodal terbatas ingin memastikan produk daur ulang benar-benar diminati sebelum produksi besar. Langkah paling tepat?","Buat prototipe, uji ke calon pembeli","Produksi 500 unit dulu","Pasang iklan berbayar besar","Anggap produk pasti laku","Tanyakan pada keluarga saja","Uji pasar berskala kecil memvalidasi minat sebelum modal besar dikeluarkan."],
+["C4","Antrean kantin sekolah sangat panjang saat istirahat, banyak siswa tidak sempat jajan. Peluang usaha paling relevan?","Layanan pesan-antar ke kelas","Bimbingan belajar malam","Toko seragam sekolah","Servis laptop","Penyewaan buku bekas","Masalah antrean dijawab langsung oleh layanan pesan-antar."],
+["C3","Isu sampah plastik meningkat dan warga mulai membawa tas belanja sendiri. Peluang usaha yang sesuai tren?","Tas belanja dari bahan daur ulang","Kantong plastik sekali pakai","Sedotan plastik kemasan","Botol sekali buang","Kemasan styrofoam","Tren ramah lingkungan mendukung produk yang dapat dipakai ulang."],
+["C4","Survei 100 orang: 70 tertarik pada produkmu, tetapi hanya 8 yang mau membeli pada harga yang ditawarkan. Kesimpulan yang tepat?","Minat tinggi, harga perlu diuji ulang","Produk pasti sukses besar","Produk pasti gagal","Survei tidak bermanfaat","Harga harus dinaikkan lagi","Ketertarikan ada, tetapi daya beli pada harga tersebut rendah sehingga penetapan harga perlu diuji."],
+["C4","Banyak ibu rumah tangga di sebuah perumahan sulit mendapat sayur segar tiap pagi. Peluang usaha yang paling tepat?","Sayur segar antar sistem langganan","Toko peralatan elektronik","Kursus gitar","Sewa panggung hiburan","Jasa cuci mobil","Masalah nyata konsumen menjadi sumber peluang usaha."],
+["C5","Kamu siswa TKJ dan ragu antara membuka kedai bakso atau jasa maintenance jaringan untuk kantor kecil. Pertimbangan terbaik?","Kesesuaian keahlian dan kebutuhan pasar","Mana yang lebih populer","Saran teman dekat","Mana yang modalnya terkecil saja","Mana yang iklannya paling banyak","Peluang terbaik memadukan kompetensi diri dengan kebutuhan pasar."]
+],
+G:[
+["C4","Pemilik usaha menolak belajar TikTok Shop dengan alasan sudah lama berbisnis dengan cara lama. Pernyataan growth mindset yang paling tepat untuk menyadarkannya?","Kemampuan baru bisa dipelajari lewat latihan","Bakat tidak dapat diubah","Belajar hal baru hanya untuk anak muda","Cara lama pasti selalu berhasil","Biarkan orang lain yang belajar","Growth mindset meyakini kemampuan berkembang melalui usaha dan belajar."],
+["C5","Seorang wirausahawan bermindset bertumbuh memilih antara produk lama yang aman tetapi mulai jenuh dan produk baru berbasis AI yang berisiko namun berpotensi besar. Keputusan paling tepat?","Uji produk baru kecil-kecilan, jaga produk lama","Tinggalkan produk lama total","Hindari semua risiko","Investasikan seluruh modal","Tunggu orang lain sukses dulu","Berani mencoba dengan risiko terukur sambil menjaga sumber pendapatan yang ada."],
+["C4","Produk perdana usaha siswa hanya terjual 5 buah. Tanggapan yang mencerminkan growth mindset?","Evaluasi penyebabnya, lalu perbaiki","Menyerah karena tidak berbakat","Menyalahkan kondisi pasar","Berganti usaha setiap gagal","Menyembunyikan hasil penjualan","Kegagalan dipandang sebagai bahan belajar untuk memperbaiki."],
+["C5","Siswa TSM ingin menaikkan nilai limbah rantai dan gir bekas bengkel sekolah yang selama ini dijual murah per kilo. Langkah kreatif terbaik?","Olah jadi dekorasi industrial bernilai jual","Jual lebih murah ke pengepul","Timbun menunggu harga naik","Buang agar bengkel rapi","Lebur di halaman sekolah","Kreativitas menambah nilai limbah lewat desain dan pengolahan menjadi produk."],
+["C4","Sebuah konveksi memiliki banyak sisa kain perca yang menumpuk. Ide bernilai tambah paling tepat?","Olah jadi tas dan bantal patchwork","Jual per karung selamanya","Bakar di belakang gudang","Buang ke selokan","Simpan sampai lapuk","Limbah perca dapat diubah menjadi produk baru bernilai jual."],
+["C4","Sebuah ulasan pelanggan mengkritik keras rasa produkmu. Sikap growth mindset yang tepat?","Jadikan masukan untuk perbaikan","Blokir pemberi ulasan","Abaikan semua kritik","Anggap pelanggan tidak paham","Hapus ulasan tersebut","Kritik dipandang sebagai informasi berharga untuk berkembang."],
+["C5","Dua ide: A menjiplak produk yang sedang viral, B memodifikasi produk dengan fitur baru berdasarkan keluhan pengguna. Mana yang mencerminkan inovasi?","B, karena menjawab keluhan pengguna","A, karena sudah terbukti laku","A, karena tanpa perlu riset","Keduanya sama saja","Tidak ada yang inovatif","Inovasi menciptakan nilai baru berdasarkan kebutuhan pengguna, bukan menjiplak."],
+["C4","Seorang pemilik usaha belajar AI untuk membuat desain iklan, tetapi hasil awalnya kurang bagus. Sikap yang tepat?","Terus berlatih, cari cara memperbaiki","Berhenti karena tidak berbakat","Ganti teknologi setiap gagal","Kembali ke cara lama","Serahkan semua pada orang lain","Belajar butuh latihan; hasil awal belum menentukan kemampuan akhir."]
+],
+E:[
+["C4","Toko daring mendadak viral dan pesanan melonjak, sementara stok bahan baku terbatas dan produksi masih manual. Risiko terbesar yang mungkin terjadi?","Pesanan terlambat, pelanggan kecewa","Pesaing berhenti berjualan","Harga bahan otomatis turun","Pelanggan berhenti menyukai produk","Omzet pasti turun tajam","Permintaan melebihi kapasitas berisiko gagal memenuhi pesanan dan merusak reputasi."],
+["C5","Seorang pengusaha menyebarkan kabar tidak benar bahwa produk pesaing mengandung bahan berbahaya. Penilaian yang tepat?","Melanggar etika, berisiko hukum","Strategi promosi yang cerdas","Wajar dalam persaingan bisnis","Boleh jika pesaing lebih besar","Sah asalkan tanpa nama","Menyebar kabar bohong bukan persaingan sehat dan berisiko hukum."],
+["C5","Seluruh modal usaha berasal dari pinjaman berbunga tinggi, sedangkan penjualan belum stabil. Mitigasi risiko yang paling tepat?","Kurangi pinjaman, modal bertahap","Tambah pinjaman agar aman","Naikkan gaya hidup pemilik","Hentikan pencatatan keuangan","Abaikan cicilan sementara","Risiko keuangan ditekan dengan mengurangi beban utang dan menyesuaikan modal dengan penjualan."],
+["C4","Sebuah kedai memakai logo dan nama yang hampir sama dengan merek terkenal di kotanya. Dampak yang paling tepat?","Merugikan pesaing, melanggar hak merek","Sah karena sama-sama kedai","Strategi cerdas cepat dikenal","Aman selama beda kota","Wajar tanpa izin apa pun","Meniru merek menyesatkan konsumen dan melanggar hak atas merek."],
+["C4","Pemasok tunggal bahan baku usahamu sering terlambat mengirim. Langkah manajemen risiko yang tepat?","Cari pemasok cadangan","Naikkan harga jual","Kurangi produksi selamanya","Beli stok untuk setahun","Tutup usaha","Menambah pemasok cadangan mengurangi ketergantungan dan risiko keterlambatan."]
+],
+R:[
+["C4","Siswa TKJ akan mengajukan jasa maintenance jaringan ke lomba bisnis tingkat provinsi. Bagian proposal yang paling penting?","Analisis pasar dan model bisnis","Foto tim di halaman sampul","Warna desain halaman","Daftar isi berwarna","Logo sponsor besar","Juri menilai kelayakan usaha lewat analisis pasar dan model bisnis."],
+["C4","Pada bagian keunggulan usaha dalam proposal jasa instalasi listrik (TITL), yang paling tepat ditulis agar investor tertarik?","Bukti terukur: teknisi bersertifikat, garansi","Kami terbaik sedunia","Kami paling murah saja","Kami tidak punya pesaing","Pemiliknya ramah pelanggan","Keunggulan harus spesifik dan dapat dibuktikan agar meyakinkan investor."],
+["C3","Siswa DKV membuat gantungan kunci akrilik: menyiapkan lembaran akrilik dan ring kunci, memotong dengan mesin laser cutting, mengamplas tepi, lalu memasang ring. Manakah yang termasuk alat?","Mesin laser cutting","Lembaran akrilik","Ring kunci","Gantungan kunci jadi","Kemasan plastik","Mesin dipakai untuk mengolah. Akrilik dan ring adalah bahan, sedangkan gantungan jadi adalah hasil produksi."],
+["C3","Produksi sabun dari minyak jelantah memakai minyak jelantah, NaOH, timbangan, cetakan, dan sarung tangan. Manakah yang termasuk bahan baku?","Minyak jelantah","Timbangan","Cetakan","Sarung tangan","Sabun jadi","Bahan baku adalah unsur yang diolah menjadi produk. Timbangan, cetakan, dan sarung tangan adalah alat; sabun jadi adalah hasil."],
+["C4","Investor bertanya kapan modal usaha dapat kembali. Bagian proposal yang menjawabnya?","Proyeksi keuangan dan balik modal","Profil singkat pendiri","Kata pengantar","Lampiran foto produk","Daftar pustaka","Proyeksi keuangan menunjukkan arus kas, laba, dan waktu pengembalian modal."],
+["C3","Dalam biaya produksi kerajinan, gaji operator yang langsung mengerjakan produk termasuk...","Biaya tenaga kerja langsung","Biaya bahan baku","Biaya pemasaran","Beban bunga pinjaman","Biaya administrasi kantor","Upah pekerja yang langsung membuat produk adalah biaya tenaga kerja langsung."]
+],
+F:[
+gLaba,gLain,gModal,gNeraca,gBiaya,gHarga,gDiskon,
+["C3","Bengkel membayar sewa ruko untuk 12 bulan ke depan. Pada neraca, sewa dibayar di muka tergolong...","Aset (harta)","Kewajiban","Modal pemilik","Beban usaha tahun ini","Pendapatan","Sewa dibayar di muka adalah hak menempati ruko di masa depan, sehingga dicatat sebagai aset."],
+["C4","Pemilik warung mengambil uang usaha untuk kebutuhan pribadi. Transaksi ini berpengaruh pada...","Modal pemilik berkurang","Laba usaha bertambah","Pendapatan bertambah","Kewajiban bertambah","Beban usaha berkurang","Pengambilan pribadi (prive) mengurangi modal pemilik, bukan beban atau kewajiban."]
+]
+};
+
+/* =================== PEMBUAT SET SOAL (deterministik dari seed) =================== */
+function normalisasi(item,cat,r){
+  var o;
+  if(typeof item==='function'){var g=item(r);o={lvl:g.lvl,q:g.q,c:g.o[0],w:g.o.slice(1),e:g.e};}
+  else o={lvl:item[0],q:item[1],c:item[2],w:item.slice(3,7),e:item[7]};
+  var opts=shuffle([o.c].concat(o.w),r);
+  return {cat:cat,lvl:o.lvl,q:o.q,opts:opts,ans:opts.indexOf(o.c),e:o.e};
+}
+function buatTes(seed){
+  var r=mulberry32(seed),out=[];
+  Object.keys(QUOTA).forEach(function(cat){
+    shuffle(BANK[cat],r).slice(0,QUOTA[cat]).forEach(function(it){out.push(normalisasi(it,cat,r));});
+  });
+  return shuffle(out,r);
+}
+
+/* =================== PENYIMPANAN SESI =================== */
+var mem=null;
+function muat(){try{var v=localStorage.getItem(KEY);return v?JSON.parse(v):mem;}catch(e){return mem;}}
+function simpan(){mem=sesi;try{localStorage.setItem(KEY,JSON.stringify(sesi));}catch(e){}}
+function hapus(){mem=null;try{localStorage.removeItem(KEY);}catch(e){}}
+
+/* =================== STATE =================== */
+var sesi=null,tes=[],jawab=[],idx=0,view='intro',away=false,timerId=null,filter='semua',hasil=null,selesai=false;
+
+function tampil(nama){
+  view=nama;
+  ['intro','quiz','result'].forEach(function(n){$('s-'+n).hidden=(n!==nama);});
+  $('bar').hidden=(nama!=='quiz');
+  window.scrollTo(0,0);
+}
+function toast(t){var el=$('toast');el.textContent=t;el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){el.hidden=true;},3200);}
+function bukaModal(id){var m=$(id);m.hidden=false;var b=m.querySelector('button');if(b)b.focus();}
+function tutupModal(id){$(id).hidden=true;}
+
+/* =================== INTRO =================== */
+(function isiKelas(){
+  var s=$('i-jur');
+  Object.keys(JURUSAN).forEach(function(j){var o=document.createElement('option');o.value=j;o.textContent=j;s.appendChild(o);});
+  s.addEventListener('change',function(){
+    var n=$('i-no');n.innerHTML='<option value="">Pilih kelas</option>';
+    var jml=JURUSAN[s.value]||0;
+    for(var i=1;i<=jml;i++){var o=document.createElement('option');o.value=i;o.textContent=s.value+' '+i;n.appendChild(o);}
+    n.disabled=!jml;
+  });
+})();
+
+$('f-mulai').addEventListener('submit',function(e){
+  e.preventDefault();
+  var nama=$('i-nama').value.replace(/\s+/g,' ').trim(),jur=$('i-jur').value,no=$('i-no').value;
+  var err=$('i-err');
+  if(nama.length<3){err.textContent='Tulis nama lengkapmu dulu.';$('i-nama').focus();return;}
+  if(!jur||!no){err.textContent='Pilih jurusan dan kelasmu.';return;}
+  err.textContent='';
+  var now=Date.now();
+  sesi={nama:nama,kelas:jur+' '+no,seed:(Math.random()*4294967296)>>>0,start:now,deadline:now+DURASI,status:'run',pel:0};
+  simpan();
+  masukUjian(false);
+});
+
+/* =================== UJIAN =================== */
+function masukUjian(lanjut){
+  tes=buatTes(sesi.seed);
+  jawab=[];for(var i=0;i<JUMLAH;i++)jawab.push(-1);
+  idx=0;away=false;selesai=false;
+  $('b-nama').textContent=sesi.nama;$('b-kelas').textContent=sesi.kelas;
+  tampil('quiz');
+  render();
+  clearInterval(timerId);timerId=setInterval(tick,500);tick();
+  if(lanjut)infoKeluar();
+}
+function terjawab(){return jawab.filter(function(v){return v>=0;}).length;}
+
+function render(){
+  var q=tes[idx];
+  $('q-no').textContent='Soal '+(idx+1)+' dari '+JUMLAH;
+  $('q-text').textContent=q.q;
+  $('q-opts').innerHTML=q.opts.map(function(o,k){
+    var on=jawab[idx]===k;
+    return '<button type="button" class="opt'+(on?' on':'')+'" data-k="'+k+'" aria-pressed="'+on+'"><span class="lt">'+'ABCDE'.charAt(k)+'</span><span>'+esc(o)+'</span></button>';
+  }).join('');
+  $('prev').disabled=(idx===0);
+  $('next').textContent=(idx===JUMLAH-1)?'Kirim Nilai':'Berikutnya';
+  renderStatus();
+}
+function renderStatus(){
+  var n=terjawab();
+  $('q-cnt').textContent='Terjawab '+n+'/'+JUMLAH;
+  $('donenote').hidden=(n<JUMLAH);
+  var g='';
+  for(var i=0;i<JUMLAH;i++){
+    g+='<button type="button" class="gn'+(jawab[i]>=0?' done':'')+(i===idx?' cur':'')+'" data-i="'+i+'" aria-label="Soal '+(i+1)+(jawab[i]>=0?', terjawab':', belum dijawab')+'">'+(i+1)+'</button>';
+  }
+  $('grid').innerHTML=g;
+}
+
+$('q-opts').addEventListener('click',function(e){
+  var b=e.target.closest('.opt');if(!b||view!=='quiz'||selesai)return;
+  jawab[idx]=+b.getAttribute('data-k');render();
+});
+$('grid').addEventListener('click',function(e){
+  var b=e.target.closest('.gn');if(!b)return;idx=+b.getAttribute('data-i');render();window.scrollTo(0,0);
+});
+$('prev').addEventListener('click',function(){if(idx>0){idx--;render();window.scrollTo(0,0);}});
+$('next').addEventListener('click',function(){
+  if(idx<JUMLAH-1){idx++;render();window.scrollTo(0,0);}else bukaKonfirmasi();
+});
+
+/* ---- timer ---- */
+function tick(){
+  if(view!=='quiz'||!sesi)return;
+  var rem=sesi.deadline-Date.now();
+  $('clock').textContent=mmss(rem);
+  var pct=Math.max(0,Math.min(100,rem/DURASI*100));
+  $('tfill').style.width=pct+'%';
+  var cls=rem<=60000?'crit':(rem<=300000?'warn':'');
+  $('clock').className='clock '+cls;$('tbar').className='tbar '+cls;
+  if(rem<=0&&!document.hidden)selesaiUjian('waktu');
+}
+
+/* ---- kirim nilai ---- */
+function bukaKonfirmasi(){
+  var n=terjawab(),k=JUMLAH-n;
+  $('mk-info').textContent=k>0?('Kamu baru menjawab '+n+' dari '+JUMLAH+' soal. '+k+' soal yang kosong dihitung salah.'):'Semua '+JUMLAH+' soal sudah kamu jawab.';
+  bukaModal('m-kirim');
+}
+$('b-kirim').addEventListener('click',bukaKonfirmasi);
+$('donebtn').addEventListener('click',bukaKonfirmasi);
+$('mk-batal').addEventListener('click',function(){tutupModal('m-kirim');});
+$('mk-ya').addEventListener('click',function(){tutupModal('m-kirim');selesaiUjian('kirim');});
+
+function selesaiUjian(alasan){
+  if(selesai||!sesi)return;
+  selesai=true;clearInterval(timerId);
+  tutupModal('m-kirim');tutupModal('m-leave');
+  var now=Math.min(Date.now(),sesi.deadline);
+  var items=tes.map(function(q,i){return {cat:q.cat,lvl:q.lvl,q:q.q,opts:q.opts,ans:q.ans,pick:jawab[i],e:q.e};});
+  var benar=items.filter(function(it){return it.pick===it.ans;}).length;
+  var kosong=items.filter(function(it){return it.pick<0;}).length;
+  hasil={nama:sesi.nama,kelas:sesi.kelas,skor:benar*NILAI,benar:benar,salah:JUMLAH-benar-kosong,kosong:kosong,durasi:now-sesi.start,pel:sesi.pel,alasan:alasan,waktu:new Date().toISOString(),items:items};
+  sesi.status='done';sesi.result=hasil;simpan();
+  tampilHasil();
+}
+
+/* =================== ANTI-CONTEK =================== */
+function tandaiKeluar(){
+  if(view!=='quiz'||selesai||away)return;
+  away=true;
+  for(var i=0;i<JUMLAH;i++)jawab[i]=-1;   // jawaban dihapus saat meninggalkan halaman
+}
+function kembali(){
+  if(!away||view!=='quiz'||selesai||document.hidden)return;
+  away=false;
+  if(sesi.deadline-Date.now()<=0){selesaiUjian('waktu');return;}
+  sesi.pel=(sesi.pel||0)+1;simpan();
+  idx=0;render();tick();window.scrollTo(0,0);
+  tutupModal('m-kirim');
+  infoKeluar();
+}
+function infoKeluar(){
+  $('ml-who').textContent=sesi.nama+' · '+sesi.kelas;
+  $('ml-info').textContent='Sisa waktu '+mmss(sesi.deadline-Date.now())+' · Keluar halaman: '+sesi.pel+' kali';
+  bukaModal('m-leave');
+}
+$('ml-ok').addEventListener('click',function(){tutupModal('m-leave');window.scrollTo(0,0);});
+document.addEventListener('visibilitychange',function(){document.hidden?tandaiKeluar():kembali();});
+window.addEventListener('blur',tandaiKeluar);
+window.addEventListener('focus',kembali);
+document.addEventListener('contextmenu',function(e){if(view==='quiz')e.preventDefault();});
+document.addEventListener('copy',function(e){if(view==='quiz')e.preventDefault();});
+
+/* =================== HASIL =================== */
+function stLabel(it){return it.pick<0?'kosong':(it.pick===it.ans?'benar':'salah');}
+function kartuHTML(it,i){
+  var st=stLabel(it),lab={benar:'Benar',salah:'Salah',kosong:'Tidak dijawab'}[st];
+  var ops=it.opts.map(function(o,k){
+    var c=k===it.ans?'ok':(k===it.pick?'no':''),t=k===it.ans?'Kunci jawaban':(k===it.pick?'Jawabanmu':'');
+    return '<li class="'+c+'"><b>'+'ABCDE'.charAt(k)+'.</b><span>'+esc(o)+'</span>'+(t?'<span class="tag">'+t+'</span>':'')+'</li>';
+  }).join('');
+  return '<article class="rv '+st+'"><div class="rv-h"><span>No. '+(i+1)+'</span><span class="rv-st">'+lab+'</span><span class="rv-cat">'+esc(CATNAME[it.cat])+' · '+it.lvl+'</span></div><p class="rv-q">'+esc(it.q)+'</p><ol class="rv-o">'+ops+'</ol><p class="rv-e"><b>Pembahasan.</b> '+esc(it.e)+'</p></article>';
+}
+function ringkasMateri(res){
+  var m={};
+  res.items.forEach(function(it){var c=m[it.cat]||(m[it.cat]={b:0,t:0});c.t++;if(it.pick===it.ans)c.b++;});
+  return Object.keys(CATNAME).filter(function(k){return m[k];}).map(function(k){return {nama:CATNAME[k],b:m[k].b,t:m[k].t};});
+}
+function tampilHasil(){
+  var r=hasil;tampil('result');
+  $('r-who').textContent=r.nama+' · '+r.kelas;
+  $('r-skor').textContent=r.skor;
+  var nt=$('r-notice');
+  if(r.alasan==='waktu'){nt.textContent='Waktu 50 menit habis. Nilai dihitung dari soal yang sudah terjawab.';nt.hidden=false;}
+  else nt.hidden=true;
+  $('r-stats').innerHTML=[['Benar',r.benar],['Salah',r.salah],['Kosong',r.kosong],['Waktu',mmss(r.durasi)],['Keluar halaman',r.pel+' kali']].map(function(x){return '<div><dt>'+x[0]+'</dt><dd>'+x[1]+'</dd></div>';}).join('');
+  $('r-mat').innerHTML='<tbody>'+ringkasMateri(r).map(function(m){return '<tr><td>'+esc(m.nama)+'</td><td class="n">'+m.b+' / '+m.t+'</td><td style="width:26%"><div class="meter" aria-hidden="true"><i style="width:'+Math.round(m.b/m.t*100)+'%"></i></div></td></tr>';}).join('')+'</tbody>';
+  filter='semua';renderDaftar();
+  $('r-unduh').hidden=true;
+  try{if(window.claude&&window.claude.use){window.claude.use('downloads').then(function(d){$('r-unduh').hidden=!d;},function(){});}}catch(e){}
+}
+function renderDaftar(){
+  var r=hasil,cnt={semua:r.items.length,salah:r.salah,kosong:r.kosong,benar:r.benar};
+  var lab={semua:'Semua',salah:'Salah',kosong:'Kosong',benar:'Benar'};
+  $('r-chips').innerHTML=Object.keys(lab).map(function(k){return '<button type="button" class="chip" data-f="'+k+'" aria-pressed="'+(filter===k)+'">'+lab[k]+' ('+cnt[k]+')</button>';}).join('');
+  var out='';
+  r.items.forEach(function(it,i){if(filter==='semua'||stLabel(it)===filter)out+=kartuHTML(it,i);});
+  $('r-list').innerHTML=out||'<p class="notice">Tidak ada soal pada kategori ini.</p>';
+}
+$('r-chips').addEventListener('click',function(e){var b=e.target.closest('.chip');if(!b)return;filter=b.getAttribute('data-f');renderDaftar();});
+$('r-ulang').addEventListener('click',function(){
+  hapus();sesi=null;hasil=null;selesai=false;
+  $('i-nama').value='';$('i-jur').value='';$('i-no').innerHTML='<option value="">Pilih kelas</option>';$('i-no').disabled=true;
+  tampil('intro');
+});
+
+/* ---- unduh laporan ---- */
+function laporanHTML(r){
+  var css='body{font-family:Arial,Helvetica,sans-serif;max-width:780px;margin:24px auto;padding:0 16px;color:#12233A;line-height:1.5}h1{margin:0 0 4px}.skor{font-size:56px;font-weight:800;margin:8px 0}table{border-collapse:collapse;width:100%;margin:8px 0 20px}td,th{border:1px solid #ccd5df;padding:6px 10px;text-align:left}.rv{border:1px solid #ccd5df;border-left:6px solid #888;border-radius:8px;padding:10px 14px;margin:0 0 12px;page-break-inside:avoid}.rv.benar{border-left-color:#0F7A55}.rv.salah{border-left-color:#B3261E}.rv-h{font-weight:700;margin-bottom:6px}.rv-cat{font-weight:400;color:#55657A;font-size:13px}.rv-o{list-style:none;padding:0;margin:8px 0}.rv-o li{padding:4px 8px;margin:3px 0;border:1px solid #e1e7ee;border-radius:6px}.rv-o li.ok{background:#E3F4EC;border-color:#0F7A55}.rv-o li.no{background:#FBE7E5;border-color:#B3261E}.tag{float:right;font-size:12px;font-weight:700}.rv-e{background:#F2F5F8;padding:8px 10px;border-radius:6px;margin:0}';
+  var mat=ringkasMateri(r).map(function(m){return '<tr><td>'+esc(m.nama)+'</td><td>'+m.b+' / '+m.t+'</td></tr>';}).join('');
+  var tgl=new Date(r.waktu).toLocaleString('id-ID');
+  return '<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hasil Latihan UTS KWU — '+esc(r.nama)+'</title><style>'+css+'</style></head><body>'+
+    '<h1>Hasil Latihan UTS Kewirausahaan Kelas XII</h1><div>SMK Bina Karya Mandiri · Semester Ganjil 2026/2027</div>'+
+    '<table><tr><th>Nama</th><td>'+esc(r.nama)+'</td></tr><tr><th>Kelas</th><td>'+esc(r.kelas)+'</td></tr><tr><th>Waktu selesai</th><td>'+esc(tgl)+'</td></tr><tr><th>Lama pengerjaan</th><td>'+mmss(r.durasi)+'</td></tr><tr><th>Keluar halaman</th><td>'+r.pel+' kali</td></tr><tr><th>Benar / Salah / Kosong</th><td>'+r.benar+' / '+r.salah+' / '+r.kosong+'</td></tr></table>'+
+    '<div class="skor">'+r.skor+' / 100</div>'+
+    '<h2>Ringkasan per materi</h2><table>'+mat+'</table>'+
+    '<h2>Pembahasan</h2>'+r.items.map(kartuHTML).join('')+'</body></html>';
+}
+$('r-unduh').addEventListener('click',function(){
+  if(!hasil)return;
+  var nama='Hasil_UTS_KWU_'+hasil.nama.replace(/[^A-Za-z0-9]+/g,'_')+'_'+hasil.kelas.replace(/\s+/g,'')+'.html';
+  window.claude.use('downloads').then(function(d){
+    if(!d){toast('Unduh tidak tersedia di tampilan ini.');return;}
+    return d.save({filename:nama,data:laporanHTML(hasil)}).then(function(){toast('Hasil tersimpan.');});
+  }).catch(function(e){if(e&&e.code==='declined')return;toast('Unduhan gagal. Coba lagi.');});
+});
+
+/* =================== MULAI: pulihkan sesi bila ada =================== */
+(function init(){
+  var s=muat();
+  if(!s){tampil('intro');return;}
+  sesi=s;
+  if(s.status==='done'&&s.result){hasil=s.result;selesai=true;tampilHasil();return;}
+  if(s.status==='run'){
+    if(Date.now()>=s.deadline){                       // waktu habis saat halaman ditutup
+      tes=buatTes(s.seed);jawab=[];for(var i=0;i<JUMLAH;i++)jawab.push(-1);
+      view='quiz';selesai=false;selesaiUjian('waktu');return;
+    }
+    s.pel=(s.pel||0)+1;simpan();                        // membuka ulang = keluar halaman
+    masukUjian(true);return;
+  }
+  tampil('intro');
+})();
+
+})();
+</script>
+</body>
+</html>
